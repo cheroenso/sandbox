@@ -33,8 +33,10 @@ public class UserManager {
         	// save data
         	if ("y".equalsIgnoreCase(input)) {
         		System.out.println("Saving user...");
-        		FileStorage fs = new FileStorage();
-        		fs.storeUser(s.csvFormat());
+//        		FileStorage fs = new FileStorage();
+//        		fs.storeUser(s.csvFormat());
+        		XmlStorage xml = new XmlStorage();
+        		xml.XmlAdd(s);
         	}
             System.out.println("Type 'quit' to end entry.");        	
         	input = console.readLine();
