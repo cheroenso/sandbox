@@ -29,6 +29,7 @@ public class RequestProcessor {
 		TextFileRequest textRequest = new TextFileRequest();
 		ImageValidater imageValidater = new ImageValidater();
 		BufferedImage image = null;
+		byte[] streamAsBytes = null;
 		String imageType = null;
 		String referenceMD5 = null;
 		ArrayList<String> requestSet = inputHandler.getAllRequestsFromFile(requestFile);
@@ -41,7 +42,9 @@ public class RequestProcessor {
 			count++;
 			parsedRequest = itr.next().split("\t");
 			if (parsedRequest.length > 0 && parsedRequest[0].equalsIgnoreCase(IMAGE)){
-				image = imageRequest.getImage(host, port, parsedRequest[PATH_FIELD_NUMBER], parsedRequest[REQUEST_FIELD_NUMBER] );
+				image = imageRequest.getImage(host, port, parsedRequest[PATH_FIELD_NUMBER], parsedRequest[REQUEST_FIELD_NUMBER]);
+				streamAsBytes = imageRequest.getStream(host, port, parsedRequest[PATH_FIELD_NUMBER], parsedRequest[REQUEST_FIELD_NUMBER]);
+				System.out.println("streamAsBytes: " + Integer.toString(streamAsBytes.length));
 				imageType = parsedRequest[IMAGE_TYPE];
 				referenceMD5 = parsedRequest[MD5_REFERENCE];
 				if (!imageValidater.compareImageMD5(image, imageType, referenceMD5)) {
@@ -51,7 +54,13 @@ public class RequestProcessor {
 					System.out.println("New file saved as: " + testfile);
 					errors++;
 				}				
-			} else if (parsedRequest.length > 0 && parsedRequest[0].equalsIgnoreCase(TEXT)) {
+				if (!imageValidater.compareByteArrayMD5(streamAsBytes, imageType, referenceMD5)) {
+					String testfile = outputHandler.saveImageFile(image, imageType);
+					System.out.println("MD5 byte difference for: " + host + port + parsedRequest[PATH_FIELD_NUMBER] + parsedRequest[REQUEST_FIELD_NUMBER]);
+					System.out.println("byte reference md5: " + referenceMD5);
+					System.out.println("New file saved as: " + testfile);
+					errors++;
+				}				} else if (parsedRequest.length > 0 && parsedRequest[0].equalsIgnoreCase(TEXT)) {
 				System.out.println("text request - NOT YET IMPLEMENTED");
 //				String temp = textRequest.getText(host, port, parsedRequest[PATH_FIELD_NUMBER], "");
 //				System.out.println(temp);
