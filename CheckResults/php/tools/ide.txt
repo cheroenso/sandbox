@@ -1,0 +1,2 @@
+org.eclipse.php.ui.explorer
+org.eclipse.dtk.ui.TypeHierarchy
