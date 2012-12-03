@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ImageEval" default="build">
+
+  <target name="build">
+  <property name="testing.host" value="s7sandiego-is.macromedia.comx`"/>
+  <property name="testing.request.file" value="/Users/cbrann/projects/data/request_demo.txt"/>
+      <classpath>
+        <pathelement location="./lib/junit-4.9b2.jar"/>
+        <pathelement location="./bin"/>
+      </classpath>
+    <junit printsummary="yes" fork="yes" haltonfailure="yes">
+      <classpath>
+        <pathelement location="./lib/junit-4.9b2.jar"/>
+        <pathelement location="./bin"/>
+      </classpath>
+      <formatter type="xml"/>
+      <test name="com.scene7.is.qa.IsRequestProcessorTest"/>
+      <test name="com.scene7.is.qa.RequestProcessorMultiTest"/>
+      <test name="com.scene7.is.qa.UtilityICTest"/>
+      <test name="com.scene7.is.qa.UtilityImageInfoTest"/>
+    </junit>
+  </target>
+</project>
+
