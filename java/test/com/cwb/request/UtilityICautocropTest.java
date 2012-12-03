@@ -37,13 +37,13 @@ public class UtilityICautocropTest {
 		}		
 	}
 	
-	@Test
-	public void testInfo_0001() throws Exception {
-		String srcFile = "/mnt/sjshare/automation_assets_sync/IC_images/junit/src/ApplyClippath/clippingpath.tif";
-		String infocontent = getInfo(CMD_IMAGEINFO + " " + "" + " " + srcFile);
-		String infoExpect  = "<ImageInfoList><ImageInfo ImageName=\"/mnt/sjshare/automation_assets_sync/IC_images/junit/src/ApplyClippath/clippingpath.tif\" ImageWidth=\"504\" ImageHeight=\"360\" ImagePixelEncoding=\"TIFF deflate\" ImageTileBytes=\"49152\" ImageBytes=\"115450\" ImageXRes=\"72\" ImageYRes=\"72\" ImageHasAlpha=\"false\" ImageHasMultipleImages=\"false\" ImageExtraChannels=\"0\" ImageBytesPerComponent=\"1\" ImageHasLayers=\"false\" ImageHasLayerMasks=\"false\" ImageHasIccProfile=\"false\" ImageIccProfileSignature=\"00000000000000000000000000000000\" ImageIccProfileDescription=\"\" ImageHasClipPath=\"true\"> <ImageFormat> <Tiff/> </ImageFormat> <ImageColorSpace> <Rgb/> </ImageColorSpace> <ImageIccProfileColorSpace> <UnknownColorSpace/> </ImageIccProfileColorSpace> <ExifInfo Software=\"Scene7 Image Converter 5.1.0\" /> <IptcInfo /> <PhotoshopPathList> <PhotoshopPath PhotoshopPathName=\"Path 1\" > </PhotoshopPath> </PhotoshopPathList> <WarningList> </WarningList></ImageInfo></ImageInfoList>";
-		assertXMLEqual("Compare image info result", infoExpect, infocontent);
-	}
+//	@Test
+//	public void testInfo_0001() throws Exception {
+//		String srcFile = "/mnt/sjshare/automation_assets_sync/IC_images/junit/src/ApplyClippath/clippingpath.tif";
+//		String infocontent = getInfo(CMD_IMAGEINFO + " " + "" + " " + srcFile);
+//		String infoExpect  = "<ImageInfoList><ImageInfo ImageName=\"/mnt/sjshare/automation_assets_sync/IC_images/junit/src/ApplyClippath/clippingpath.tif\" ImageWidth=\"504\" ImageHeight=\"360\" ImagePixelEncoding=\"TIFF deflate\" ImageTileBytes=\"49152\" ImageBytes=\"115450\" ImageXRes=\"72\" ImageYRes=\"72\" ImageHasAlpha=\"false\" ImageHasMultipleImages=\"false\" ImageExtraChannels=\"0\" ImageBytesPerComponent=\"1\" ImageHasLayers=\"false\" ImageHasLayerMasks=\"false\" ImageHasIccProfile=\"false\" ImageIccProfileSignature=\"00000000000000000000000000000000\" ImageIccProfileDescription=\"\" ImageHasClipPath=\"true\"> <ImageFormat> <Tiff/> </ImageFormat> <ImageColorSpace> <Rgb/> </ImageColorSpace> <ImageIccProfileColorSpace> <UnknownColorSpace/> </ImageIccProfileColorSpace> <ExifInfo Software=\"Scene7 Image Converter 5.1.0\" /> <IptcInfo /> <PhotoshopPathList> <PhotoshopPath PhotoshopPathName=\"Path 1\" > </PhotoshopPath> </PhotoshopPathList> <WarningList> </WarningList></ImageInfo></ImageInfoList>";
+//		assertXMLEqual("Compare image info result", infoExpect, infocontent);
+//	}
 	
 	@Test
 	public void testIc_0001() throws Exception {
@@ -54,11 +54,12 @@ public class UtilityICautocropTest {
 		String yCrop = "0";
 		String height = "0";
 		String width = "0";
-		String errorMsg		= uHandler.convertFileToTiff(UTILITY_PATH + " " + options + " " + srcFile, reference);
-		
-		assertTrue(errorMsg, (errorMsg.length() == 0));
+//		String errorMsg		= uHandler.convertFileToTiff(UTILITY_PATH + " " + options + " " + srcFile, reference);
+//		
+//		assertTrue(errorMsg, (errorMsg.length() == 0));
         String myControlXML = "<msg><uuid>0x00435A8C</uuid></msg>";
-        String myTestXML = "<msg><localId>2376</localId></msg>";
+//        String myTestXML = "<msg><localId>2376</localId></msg>";
+        String myTestXML = "<msg><uuid>2376</uuid></msg>";
         try {
         	assertXMLEqual("Comparing test xml to control xml",
                        myControlXML, myTestXML);
@@ -81,9 +82,9 @@ public class UtilityICautocropTest {
 		String yCrop = "0";
 		String height = "0";
 		String width = "0";
-		String errorMsg		= uHandler.convertFileToTiff(UTILITY_PATH + " " + options + " " + srcFile, reference);
-
-		assertTrue(errorMsg, (errorMsg.length() == 0));
+//		String errorMsg		= uHandler.convertFileToTiff(UTILITY_PATH + " " + options + " " + srcFile, reference);
+//
+//		assertTrue(errorMsg, (errorMsg.length() == 0));
 		//        String myControlXML = "<msg><uuid>0x00435A8C</uuid></msg>";
 		//        String myTestXML = "<msg><localId>2376</localId></msg>";
 		String myControlXML = "<suite>"
@@ -105,6 +106,35 @@ public class UtilityICautocropTest {
 			myDiff.overrideElementQualifier(new ElementNameAndTextQualifier());
 			assertXMLEqual("But they are equal when an ElementQualifier controls which test element is compared with each control element",
 					myDiff, true);
+		} catch (Exception e) {
+			// If test encounters an error print the Exception message and fail the test
+			assertTrue(e.getMessage(), false);
+		}
+	}
+	
+	@Test
+	public void testIc_0003(){
+		String srcFile		= "/mnt/sjshare/automation_assets_sync/IC_images/junit/src/All/BMP/bits_56/Bit_565.bmp";
+		String options		= "-convert";
+		String reference	= "9c599c730d188a89a6285c12d06a0921";
+		String xCrop = "0";
+		String yCrop = "0";
+		String height = "0";
+		String width = "0";
+		String errorMsg		= uHandler.convertFileToTiff(UTILITY_PATH + " " + options + " " + srcFile, reference);
+
+	    String mySolarSystemXML = "<solar-system>"
+	            + "<planet name='Earth' position='3' supportsLife='yes'/>"
+	            + "<planet name='Venus' position='4'/></solar-system>";
+	    try {
+	        assertXpathExists("//planet[@name='Earth']", mySolarSystemXML);
+	        assertXpathNotExists("//star[@name='alpha centauri']",
+	                             mySolarSystemXML);
+	        assertXpathsEqual("//planet[@name='Earth']",
+	                          "//planet[@position='3']", mySolarSystemXML);
+	        assertXpathsNotEqual("//planet[@name='Venus']",
+	                             "//planet[@supportsLife='yes']",
+	                             mySolarSystemXML);
 		} catch (Exception e) {
 			// If test encounters an error print the Exception message and fail the test
 			assertTrue(e.getMessage(), false);
