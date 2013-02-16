@@ -9,7 +9,8 @@ import javax.imageio.ImageIO;
 
 public class OutputHandler {
 	public static String outputPath = "/tmp/requests/";
-	public static String fileNameFormat = "yyyyMMddhhmmss.SSSS";
+//	public static String fileNameFormat = "yyyyMMddhhmmss.SSSS";
+	public static String fileNameFormat = "yyyyMMddhhmmss";
 	
 	/**
 	 * Save an image to a file name based on a timestamp

@@ -41,6 +41,11 @@ public class RequestProcessor {
 		while (itr.hasNext()){
 			count++;
 			parsedRequest = itr.next().split("\t");
+			System.out.println(parsedRequest[0]);
+			System.out.println(parsedRequest[PATH_FIELD_NUMBER]);
+			System.out.println(parsedRequest[REQUEST_FIELD_NUMBER]);
+			System.out.println(parsedRequest[IMAGE_TYPE]);
+			System.out.println(parsedRequest[MD5_REFERENCE]);
 			if (parsedRequest.length > 0 && parsedRequest[0].equalsIgnoreCase(IMAGE)){
 				image = imageRequest.getImage(host, port, parsedRequest[PATH_FIELD_NUMBER], parsedRequest[REQUEST_FIELD_NUMBER]);
 				streamAsBytes = imageRequest.getStream(host, port, parsedRequest[PATH_FIELD_NUMBER], parsedRequest[REQUEST_FIELD_NUMBER]);
