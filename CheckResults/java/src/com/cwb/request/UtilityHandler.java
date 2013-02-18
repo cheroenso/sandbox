@@ -75,25 +75,6 @@ public class UtilityHandler {
 		}
 	}
 	
-	
-
-	/**
-	 * Execute an arbitrary command using .exec call. The output of the command is a file in the /tmp directory.
-	 * The output file is processed with TiffMd5sum, and the result compared to the reference parameter
-	 * If the results match the reference the temporary file is removed from the /tmp directory.
-	 * If the results don't match the temporary file is left in place and the name is passed to the
-	 * calling test.
-	 * @param utilityCommand
-	 * @param reference
-	 * @return
-	 * @author cbrann
-	 * @since 2012-06-02
-	 * @deprecated Replaced by convertFileTiff.
-	 */
-	public String convertFile(String utilityCommand, String reference) {
-		return this.convertFileToTiff(utilityCommand, reference);
-	}
-
 	/**
 	 * Execute an arbitrary command using .exec call. The output of the command is a file in the /tmp directory.
 	 * The output file is processed with TiffMd5sum, and the result compared to the reference parameter
