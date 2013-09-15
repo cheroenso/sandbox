@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import com.cwb.request.ResultBean;
 
 /**
  * Make requests to a utility and validate the response.
@@ -75,6 +76,8 @@ public class UtilityHandler {
 		}
 	}
 	
+
+
 	/**
 	 * Execute an arbitrary command using .exec call. The output of the command is a file in the /tmp directory.
 	 * The output file is processed with TiffMd5sum, and the result compared to the reference parameter
@@ -274,7 +277,8 @@ public class UtilityHandler {
 	}
 
 	/**
-	 * Execute basic Red Hat md5sum and return sum
+	 * Execute basic md5sum and return sum
+	 * Adding a line in branch 2013-09
 	 * @param outFileName
 	 * @return standard md5 sum
 	 * @author cbrann
