@@ -41,7 +41,7 @@ public class RequestProcessorMultiTest {
     	RequestProcessorMultiTest.request = request;
 	}	
     
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name="{0}")
     public static Collection<Object[]> requests(){
     	String myHost = System.getenv(testHostPropertyName);
     	String myFile = System.getenv(testFilePropertyName);

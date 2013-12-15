@@ -46,6 +46,15 @@ public class ImageFileRequest {
 		}
 		return buffImage;
 	}
+	
+	/**
+	 * Avoid image translation by handling response as plain byte array
+	 * @param host
+	 * @param port
+	 * @param path
+	 * @param query
+	 * @return
+	 */
 	public byte[] getStream(String host, String port, String path, String query){
 		URI uri = null;
 		byte[] bArray = null;
