@@ -6,12 +6,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.URLConnection;
 
-//import org.apache.commons.httpclient.URIException;
-//import org.apache.commons.httpclient.util;
-//import org.apache.http.client.utils.URIUtils;
-
-//import com.sun.jndi.toolkit.url.UrlUtil;
 
 
 public class StreamHelper {
@@ -84,14 +80,18 @@ public class StreamHelper {
 		InputStream is = null;
 		String authority = host + ":" + port;
 		String fragment = "";
+		String httpAuthEncoded = new sun.misc.BASE64Encoder().encode(httpAuth.getBytes());
 		try {
 			uri = new URI(uriScheme, httpAuth, host, Integer.parseInt(port), URLEncoder.encode(path, encoding), query, fragment);
 			URL url = uri.toURL();
 			try {
-				is = url.openStream();
+				URLConnection conn = url.openConnection();
+				conn.setRequestProperty("Authorization", "Basic " + httpAuthEncoded);
+				is = conn.getInputStream();
 			} catch (IOException ioe) {
+				System.err.println("ERROR: scheme: " + uri.getScheme() + ", userInfo: " + uri.getUserInfo() + ", host: "
+						+ uri.getHost() + ", port: " + uri.getPort() + "path: " + uri.getPath());
 				System.err.println(ioe.getMessage());
-				System.err.println("request: " + url);
 			}
 			byte[] byteChunk = new byte[4096];
 			int i;
@@ -101,7 +101,8 @@ public class StreamHelper {
 			is.close();
 		} catch (Exception e){
 			e.getMessage();
-			System.err.println("ERROR: for stream request: " + uriScheme + authority + "/" + path + "?" + query + fragment);
+			System.err.println("ERROR: scheme: " + uri.getScheme() + ", userInfo: " + uri.getUserInfo() + ", host: "
+					+ uri.getHost() + ", port: " + uri.getPort() + "path: " + uri.getPath());
 		} finally {
 			if (is != null){
 				try {
